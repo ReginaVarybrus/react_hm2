@@ -26,25 +26,34 @@ export class MyClock extends React.Component {
         });
       }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextState.date.toLocaleTimeString());
-        return nextState.date.getSeconds() % 2 ? false : true;
-    }
-
     render () {
         return (
             <>
-              <p>{this.props.children}</p>
-              <img src={this.props.src} className="App-logo" alt="logo"></img>
-              <p>{this.state.date.getUTCDate()}/{this.state.date.getUTCMonth()}/{this.state.date.getUTCFullYear()}</p>
-              <p>{this.state.date.toLocaleTimeString()}</p> 
+              <p>{this.props.name}</p>
+              <img src={this.props.src}></img>
+              <p>Today is {this.state.date.getUTCDate()}/{this.state.date.getUTCMonth()}/{this.state.date.getUTCFullYear()}</p>
+
+              <CheckClock>
+                {this.state.date}
+              </CheckClock>
             </>
         )
     }
 }
 
-// Добавте классовый компонент, принемающий пропсы. В пропсу поместите путь к картинке и ее название. 
-// Сам компонент (классовый) отображает картинку (второй раз) и текущую дату и время, время обновляется каждую секунду, 
-// грубо говоря как часы. Помните о жизненных циклах классового компонента при создании часов.
+export class CheckClock extends React.Component {
+    
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(nextProps.children.toLocaleTimeString());
+        return nextProps.children.getSeconds() % 2 ? false : true;
+    }
 
-// передавайте время в дочерний компонент как пропсы, компонент тоже классовый. 
+    render () {
+        return (
+            <>
+              <p>Time is {this.props.children.toLocaleTimeString()}</p> 
+            </>
+        )
+    }
+}
+
